@@ -19,7 +19,6 @@ Main page of TinyURL. It shows a form for users to create a shortened url for
 a given url. This handler also handles the creation of the shortened url.
 """
 import os
-from urlparse import urlparse
 
 import jinja2
 import webapp2
@@ -45,9 +44,7 @@ class MainHandler(webapp2.RequestHandler):
     def post(self):
         url = self.request.params['url']
 
-        parsed_url = urlparse(url)
-        if parsed_url.scheme and parsed_url.netloc:
-            # valid url
+        if tutil.validate_url(url):
             new_entry = tmodels.create_new_entry(url)
             new_url = tutil.construct_shortened_url(
                 self.request.application_url,

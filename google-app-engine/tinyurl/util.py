@@ -13,8 +13,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 """
+from urlparse import urlparse
+
 def construct_shortened_url(app_url, url_hash):
     return "{app_url}/g/{url_hash}".format(
         **locals()
     )
 
+
+def validate_url(url):
+    parsed_url = urlparse(url)
+    return parsed_url.scheme and parsed_url.netloc
